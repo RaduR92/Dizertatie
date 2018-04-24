@@ -15,50 +15,52 @@
           <form class="form-horizontal">
             <fieldset>
 
-            <!-- Form Name -->
             <legend>Adauga Student</legend>
 
-            <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="textinput">Nume</label>  
+              <label class="col-md-4 control-label" for="nume">Nume</label>  
               <div class="col-md-4">
-              <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md" required="">
+              <input id="nume" name="nume" type="text" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
 
-            <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="textinput">Prenume</label>  
+              <label class="col-md-4 control-label" for="prenume">Prenume</label>  
               <div class="col-md-4">
-              <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md" required="">
+              <input id="prenume" name="prenume" type="text" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
 
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="textinput">Adresa e-mail</label>  
+             <div class="form-group">
+              <label class="col-md-4 control-label" for="numar_matricol">Numar Matricol</label>  
               <div class="col-md-4">
-              <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md" required="">
+              <input id="numar_matricol" name="numar_matricol" type="text" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
 
-            <!-- Password input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="passwordinput">Parola</label>
+              <label class="col-md-4 control-label" for="mail">Adresa e-mail</label>  
               <div class="col-md-4">
-                <input id="passwordinput" name="passwordinput" type="password" placeholder="" class="form-control input-md" required="">
+              <input id="mail" name="mail" type="text" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
 
-            <!-- Select Basic -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="selectbasic">Alege anul de studiu</label>
+              <label class="col-md-4 control-label" for="parola">Parola</label>
               <div class="col-md-4">
-                <select id="selectbasic" name="selectbasic" class="form-control">
+                <input id="parola" name="parola" type="password" placeholder="" class="form-control input-md" required="">
+                
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="an_studiu">Alege anul de studiu</label>
+              <div class="col-md-4">
+                <select id="an_studiu" name="an_studiu" class="form-control">
                   <option value="an_1_licenta">Anul 1 Licenta</option>
                   <option value="an_2_licenta">Anul 2 Licenta</option>
                   <option value="an_3_licenta">Anul 3 Licenta</option>
@@ -69,16 +71,14 @@
               </div>
             </div>
 
-            <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="textinput">Specializarea</label>  
+              <label class="col-md-4 control-label" for="specializare">Specializarea</label>  
               <div class="col-md-4">
-              <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md" required="">
+              <input id="specializare" name="specializare" type="text" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
 
-            <!-- Button -->
             <div class="form-group">
               <div class="col-md-4">
                 <button id="singlebutton" name="singlebutton" class="btn btn-primary">Adauga Student</button>
