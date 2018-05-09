@@ -59,7 +59,7 @@
           <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-envelope"></i>
             <span class="d-lg-none">Mesaje
-              <span class="badge badge-pill badge-primary">12 New</span>
+              <span class="badge badge-pill badge-primary">12 noi</span>
             </span>
             <span class="indicator text-primary d-none d-lg-block">
               <i class="fa fa-fw fa-circle"></i>
@@ -69,21 +69,21 @@
             <h6 class="dropdown-header">Mesaje noi:</h6>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
-              <strong>David Miller</strong>
+              <strong>Ion Popescu</strong>
               <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
+              <div class="dropdown-message small">Ai un mesaj nou de la Ion Popescu</div>
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
-              <strong>Jane Smith</strong>
+              <strong>Prof. Popescu</strong>
               <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
+              <div class="dropdown-message small">Ai un mesaj nou de la Prof. Popescu</div>
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
-              <strong>John Doe</strong>
+              <strong>Ion Popescu</strong>
               <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
+              <div class="dropdown-message small">Ai un mesaj nou de la Ion Popescu</div>
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item small" href="#">Vezi toate mesajele</a>
@@ -93,7 +93,7 @@
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-fw fa-bell"></i>
             <span class="d-lg-none">Alerte
-              <span class="badge badge-pill badge-warning">6 New</span>
+              <span class="badge badge-pill badge-warning">6 noi</span>
             </span>
             <span class="indicator text-warning d-none d-lg-block">
               <i class="fa fa-fw fa-circle"></i>
@@ -108,7 +108,7 @@
                   <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
               </span>
               <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+              <div class="dropdown-message small">A fost incarcat un fisier nou in Fizica</div>
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
@@ -117,7 +117,7 @@
                   <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
               </span>
               <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+              <div class="dropdown-message small">Salut, maine e termenul limita pentru proiectul la Fizica!</div>
             </a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">
@@ -126,7 +126,7 @@
                   <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
               </span>
               <span class="small float-right text-muted">11:21 AM</span>
-              <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
+              <div class="dropdown-message small">Ai un examen in 12 zile</div>
             </a>
             <div class="dropdown-divider"></div>
           </div>
