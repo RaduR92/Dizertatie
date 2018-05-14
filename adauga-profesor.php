@@ -12,7 +12,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form class="form-horizontal">
+          <form class="form-horizontal" action="adauga-profesor.php" method="POST">
             <fieldset>
 
             <legend>Adauga Profesor</legend>
@@ -51,12 +51,30 @@
 
             <div class="form-group">
               <div class="col-md-4">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">Adauga Profesor</button>
+                <button id="adauga-profesor" name="adauga-profesor" value="1" class="btn btn-primary">Adauga Profesor</button>
               </div>
             </div>
 
             </fieldset>
             </form>
+
+            <?php 
+              echo '<pre>';
+              print_r($_POST);
+              echo '</pre>';
+              if(is_array($_POST) && $_POST['adauga-profesor']){
+                    $nume_profesor = mysqli_real_escape_string($conn, $_POST['nume_profesor']);
+                    $prenume_profesor = mysqli_real_escape_string($conn, $_POST['prenume_profesor']);
+                    $parola = password_hash($_POST['parola'], PASSWORD_BCRYPT);
+                    $mail = mysqli_real_escape_string($conn, $_POST['mail']);
+                  
+                    
+                    $query ="INSERT INTO profesori (nume_profesor, prenume_profesor, parola, mail) VALUES ( '". $nume_profesor."','".$prenume_profesor."','".$parola."','".$mail."')";
+                    
+                   $result = mysqli_query($conn, $query);
+
+              }
+          ?>
         </div>
       </div>
     </div>

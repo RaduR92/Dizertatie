@@ -12,7 +12,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form class="form-horizontal">
+          <form class="form-horizontal" action="adauga-student.php" method="POST">
             <fieldset>
 
             <legend>Adauga Student</legend>
@@ -81,12 +81,30 @@
 
             <div class="form-group">
               <div class="col-md-4">
-                <button id="singlebutton" name="singlebutton" class="btn btn-primary">Adauga Student</button>
+                <button id="singlebutton" name="singlebutton" value="1" class="btn btn-primary">Adauga Student</button>
               </div>
             </div>
 
             </fieldset>
           </form>
+
+          <?php 
+              if(is_array($_POST) && $_POST['singlebutton']){
+                    $nume = mysqli_real_escape_string($conn, $_POST['nume']);
+                    $prenume = mysqli_real_escape_string($conn, $_POST['prenume']);
+                    $numar_matricol = mysqli_real_escape_string($conn, $_POST['numar_matricol']);
+                    $mail = mysqli_real_escape_string($conn, $_POST['mail']);
+                    $parola = password_hash($_POST['parola'], PASSWORD_BCRYPT);
+                    $an_studiu = mysqli_real_escape_string($conn, $_POST['an_studiu']);
+                    $specializare = mysqli_real_escape_string($conn, $_POST['specializare']);
+                    
+                    $query ="INSERT INTO studenti (nume, prenume, numar_matricol, mail, parola, an_studiu, specializare) VALUES ( '". $nume."','".$prenume."','".$numar_matricol."','".$mail."','".$parola."','".$an_studiu."'
+                    ,'".$specializare."' )";
+                  
+                   $result = mysqli_query($conn, $query);
+
+              }
+          ?>
         </div>
       </div>
     </div>

@@ -19,6 +19,13 @@
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
+  <?php 
+      session_start();
+      //if(!$_SESSION['user_logged']) {
+       // header("Location:login.php"); 
+     // }
+
+  ?>
 <?php include('database_connection.php'); ?>
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
