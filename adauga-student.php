@@ -94,7 +94,7 @@
                     $prenume = mysqli_real_escape_string($conn, $_POST['prenume']);
                     $numar_matricol = mysqli_real_escape_string($conn, $_POST['numar_matricol']);
                     $mail = mysqli_real_escape_string($conn, $_POST['mail']);
-                    $parola = password_hash($_POST['parola'], PASSWORD_BCRYPT);
+                    $parola = base64_encode($_POST['parola']);
                     $an_studiu = mysqli_real_escape_string($conn, $_POST['an_studiu']);
                     $specializare = mysqli_real_escape_string($conn, $_POST['specializare']);
                     

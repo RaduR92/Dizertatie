@@ -65,7 +65,7 @@
               if(is_array($_POST) && $_POST['adauga-profesor']){
                     $nume_profesor = mysqli_real_escape_string($conn, $_POST['nume_profesor']);
                     $prenume_profesor = mysqli_real_escape_string($conn, $_POST['prenume_profesor']);
-                    $parola = password_hash($_POST['parola'], PASSWORD_BCRYPT);
+                    $parola = base64_encode($_POST['parola']);
                     $mail = mysqli_real_escape_string($conn, $_POST['mail']);
                   
                     

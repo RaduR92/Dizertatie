@@ -17,25 +17,55 @@
 </head>
 
 <body class="bg-dark">
+  <?php include('database_connection.php'); ?>
   <div class="container">
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Conectare</div>
       <div class="card-body">
-        <form>
+        <form action="login.php" method="POST">
           <div class="form-group">
             <label for="email_adresa">Adresa e-mail</label>
-            <input class="form-control" id="email_adresa" type="email" aria-describedby="emailHelp" placeholder="introdu adresa de e-mail">
+            <input class="form-control" id="email_adresa" name="email_adresa" type="email" aria-describedby="emailHelp" placeholder="introdu adresa de e-mail">
           </div>
           <div class="form-group">
             <label for="parola_conectare">Parola</label>
-            <input class="form-control" id="parola_conectare" type="password" placeholder="Introdu parola">
+            <input class="form-control" id="parola_conectare" name="parola_conectare" type="password" placeholder="Introdu parola">
           </div>
-          <a class="btn btn-primary btn-block" href="index.php">Conectare</a>
+          <button id="conectare" name="singlebutconectareton" value="1" class="btn btn-primary">Conectare</button>
         </form>
         <div class="text-center">
 
           <a class="d-block small" href="forgot-password.php">Ai uitat parola?</a>
         </div>
+
+        <?php 
+           if ($_POST['email_adresa'] != "" && $_POST['parola_conectare'] != '') {
+ 
+            // preia datele din formular
+            $mail = $_POST['email_adresa'];
+            $parola = base64_encode($_POST['parola_conectare']);
+         
+            // formeaza si executa query-ul de select din baza de date
+            $query = "SELECT * FROM profesori, studenti WHERE mail='".$mail."' AND parola='".$parola."'";
+            $result = mysqli_query($conn, $query) or die ( "Error : ". mysqli_error($conn) );
+            echo $query;
+            print_r($result);
+         
+            // verifica daca interogarea MySQL a gasit date valide
+            if ($result || mysql_num_rows($result) < 1) {
+                // daca nu, afiseaza un mesaj de eroare
+                echo "Datele introduse sunt incorecte<br>";
+            } else {
+            
+                // salveaza username-ul si parola in sesiune
+                $_SESSION['mail'] = $mail;
+                $_SESSION['parola'] = $parola;
+         
+                // afiseaza un mesaj de succes        
+                echo "Autentificarea a fost efectuata cu succes.";
+            }
+        }
+        ?>
       </div>
     </div>
   </div>

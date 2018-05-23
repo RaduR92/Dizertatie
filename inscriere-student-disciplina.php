@@ -32,6 +32,18 @@
           </div>
 
           <div class="form-group">
+            <label class="col-md-4 control-label" for="c">Alege Student</label>
+            <div class="col-md-4">
+              <select id="c" name="c" class="form-control">
+                <option value="an_1_licenta">Popescu Ion</option>
+                <option value="an_2_licenta">Vasile Maria</option>
+                <option value="an_3_licenta">Victoria Popescu</option>
+                <option value="an_4_licenta">Zaharie Radu</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
             <label class="col-md-4 control-label" for="selectbasic">Alege Materia</label>
             <div class="col-md-4">
               <select id="selectbasic" name="selectbasic" class="form-control">

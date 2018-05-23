@@ -21,7 +21,7 @@
 <body class="fixed-nav sticky-footer" id="page-top">
   <?php 
       session_start();
-      //if(!$_SESSION['user_logged']) {
+     // if(!$_SESSION['user_logged']) {
        // header("Location:login.php"); 
      // }
 
