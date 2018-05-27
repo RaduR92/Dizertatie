@@ -31,6 +31,14 @@
             <label for="parola_conectare">Parola</label>
             <input class="form-control" id="parola_conectare" name="parola_conectare" type="password" placeholder="Introdu parola">
           </div>
+          <div class="form-group">
+            <label class="control-label" for="tip_utilizator">Student/Profesor</label>
+            <select id="tip_utilizator" name="tip_utilizator" class="form-control">
+              <option value="-">-Alege-</option>
+              <option value="student">Student</option>
+              <option value="profesor">Profesor</option>
+            </select>
+          </div>
           <button id="conectare" name="singlebutconectareton" value="1" class="btn btn-primary">Conectare</button>
         </form>
         <div class="text-center">
@@ -39,18 +47,50 @@
         </div>
 
         <?php 
-           if ($_POST['email_adresa'] != "" && $_POST['parola_conectare'] != '') {
- 
-            // preia datele din formular
-            $mail = $_POST['email_adresa'];
-            $parola = base64_encode($_POST['parola_conectare']);
-         
-            // formeaza si executa query-ul de select din baza de date
-            $query = "SELECT * FROM profesori, studenti WHERE mail='".$mail."' AND parola='".$parola."'";
-            $result = mysqli_query($conn, $query) or die ( "Error : ". mysqli_error($conn) );
-            echo $query;
-            print_r($result);
-         
+          session_start();
+        
+          if (isset($_POST['email_adresa']) != "" && $_POST['parola_conectare'] != '') {
+
+          // preia datele din formular
+          $mail = $_POST['email_adresa'];
+          $parola = base64_encode($_POST['parola_conectare']);
+          if($_POST['tip_utilizator'] && $_POST['tip_utilizator'] == 'student' ){
+        
+          // formeaza si executa query-ul de select din baza de date
+          $query = "SELECT * FROM studenti WHERE mail='".$mail."' AND parola='".$parola."'";
+          
+          $result = mysqli_query($conn, $query) or die ( "Error : ". mysqli_error($conn) );
+          
+          
+        
+          // verifica daca interogarea MySQL a gasit date valide
+          if ($result = mysqli_query($conn,$query)) {
+            $_SESSION['mail'] = $mail;
+            $_SESSION['parola'] = $parola;
+      
+            // afiseaza un mesaj de succes        
+            echo "Autentificarea a fost efectuata cu succes.";
+            $_SESSION['user_logged'] = 'student';
+            while ($row = mysqli_fetch_array($result))
+                {
+                     $_SESSION['id_utilizator'] = $row['ID'];
+                     $_SESSION['nume_utilizator'] = $row['nume'].' '.$row['prenume'];
+                     $_SESSION['an_studiu'] = $row['an_studiu'];
+                     $_SESSION['specializare'] = $row['specializare'];
+                }
+            header("Location:index.php");
+            
+          } else {
+          
+                // daca nu, afiseaza un mesaj de eroare
+                echo "Datele introduse sunt incorecte<br>";
+              
+          }
+
+          } else {
+            $query = "SELECT * FROM profesori WHERE mail='".$mail."' AND parola='".$parola."'";
+            $result = mysqli_query($conn, $query);
+          
             // verifica daca interogarea MySQL a gasit date valide
             if ($result || mysql_num_rows($result) < 1) {
                 // daca nu, afiseaza un mesaj de eroare
@@ -60,10 +100,18 @@
                 // salveaza username-ul si parola in sesiune
                 $_SESSION['mail'] = $mail;
                 $_SESSION['parola'] = $parola;
-         
+                while ($row = mysqli_fetch_array($result))
+                {
+                     $_SESSION['id_utilizator'] = $row['ID'];
+                     $_SESSION['nume_utilizator'] = $row['nume_profesor'].' '.$row['prenume_profesor'];
+                }
+                $_SESSION['user_logged'] = 'profesor';
+                header("Location:index.php");
+          
                 // afiseaza un mesaj de succes        
                 echo "Autentificarea a fost efectuata cu succes.";
-            }
+           }
+          }
         }
         ?>
       </div>

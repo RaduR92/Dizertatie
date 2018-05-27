@@ -497,3 +497,35 @@ footer.sticky-footer {
     width: calc(100% - 55px);
   }
 }
+
+
+.nav-pills {
+  border-bottom: 1px solid #166cc3;
+}
+
+.nav-pills li  a {
+  padding:10px;
+  border-radius: 4px 4px 0 0 ;
+  text-decoration: none;
+  display: block;
+ }
+
+.nav-pills li a.active {
+  background-color: #166cc3;
+  color:#fff;
+  text-decoration: none;
+}
+
+.navbar-toggler {
+  background: #fff;
+}
+
+.navbar-toggler i {
+  color:#166cc3;
+}
+
+p.user {
+  color:#fff;
+  margin-bottom:0;
+  padding: .5rem 1rem;
+}

@@ -16,22 +16,36 @@
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+   <!-- Bootstrap core JavaScript-->
+   <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
+    <script src="js/sb-admin-charts.min.js"></script>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
   <?php 
-      session_start();
-     // if(!$_SESSION['user_logged']) {
-       // header("Location:login.php"); 
-     // }
+    session_start();
+    if(!$_SESSION['user_logged']) {
+      header("Location:login.php"); 
+    }
 
   ?>
 <?php include('database_connection.php'); ?>
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">UPT | Campus Virtual</a>
+    <a class="navbar-brand" href="index.php">UPT | Campus Virtual</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <i class="fa fa-fw fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
@@ -53,6 +67,18 @@
             <span class="nav-link-text">Noutati</span>
           </a>
         </li>
+        <?php 
+          if($_SESSION['user_logged'] == 'profesor') {
+        ?>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adauga Materie">
+            <a class="nav-link" href="adaug-materie.php">
+              <i class="fa fa-fw fa-plus-square"></i>
+              <span class="nav-link-text">Adauga Materie</span>
+            </a>
+          </li>
+        <?php
+          }
+        ?>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
@@ -149,6 +175,9 @@
               </span>
             </div>
           </form>
+        </li>
+        <li class="nav-item">
+          <p class="user"> Bun venit, <?php echo $_SESSION['nume_utilizator']; ?> </p>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
