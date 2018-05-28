@@ -56,10 +56,37 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Materii">
-          <a class="nav-link" href="materii.php">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMaterii" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-book"></i>
             <span class="nav-link-text">Materii</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseMaterii">
+            <?php 
+            if($_SESSION['user_logged'] == 'student') {
+              $query = 'SELECT materii.ID, materii.nume_materie FROM inscriere_studenti RIGHT JOIN materii ON inscriere_studenti.id_materie = materii.ID WHERE inscriere_studenti.id_student ='.$_SESSION['id_utilizator'];
+              $loop = mysqli_query($conn, $query);
+              while ($row = mysqli_fetch_array($loop))
+              {
+                    echo '<li>
+                            <a href="materie.php?id_materie='.$row['ID'].'">'.$row['nume_materie'].'</a>
+                          </li>';
+              }   
+            }
+            
+            if($_SESSION['user_logged'] == 'profesor') {
+              $query = 'SELECT * FROM materii WHERE profesor_coordonator ='.$_SESSION['id_utilizator'];
+              $loop = mysqli_query($conn, $query);
+              while ($row = mysqli_fetch_array($loop))
+              {
+                    echo '<li>
+                            <a href="materie.php?id_materie='.$row['ID'].'">'.$row['nume_materie'].'</a>
+                          </li>';
+              }   
+            }
+            
+            
+            ?>
+          </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Noutati">
           <a class="nav-link" href="noutati.php">
@@ -71,7 +98,7 @@
           if($_SESSION['user_logged'] == 'profesor') {
         ?>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adauga Materie">
-            <a class="nav-link" href="adaug-materie.php">
+            <a class="nav-link" href="adauga-materie.php">
               <i class="fa fa-fw fa-plus-square"></i>
               <span class="nav-link-text">Adauga Materie</span>
             </a>

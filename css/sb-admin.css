@@ -529,3 +529,9 @@ p.user {
   margin-bottom:0;
   padding: .5rem 1rem;
 }
+
+.page-header {
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* Pagina Materiei */

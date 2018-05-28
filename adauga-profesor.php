@@ -59,10 +59,7 @@
             </form>
 
             <?php 
-              echo '<pre>';
-              print_r($_POST);
-              echo '</pre>';
-              if(is_array($_POST) && $_POST['adauga-profesor']){
+              if(is_array($_POST) && isset($_POST['adauga-profesor'])){
                     $nume_profesor = mysqli_real_escape_string($conn, $_POST['nume_profesor']);
                     $prenume_profesor = mysqli_real_escape_string($conn, $_POST['prenume_profesor']);
                     $parola = base64_encode($_POST['parola']);
@@ -72,6 +69,10 @@
                     $query ="INSERT INTO profesori (nume_profesor, prenume_profesor, parola, mail) VALUES ( '". $nume_profesor."','".$prenume_profesor."','".$parola."','".$mail."')";
                     
                    $result = mysqli_query($conn, $query);
+
+                   if ($result = mysqli_query($conn,$query)) { 
+                    echo 'Profesorul a fost adaugat cu succes';
+                   }
 
               }
           ?>

@@ -34,7 +34,7 @@
               </div>
             </div>
 
-            <!-- Select Basic -->
+            <?php if($_SESSION['user_logged'] == 'admin') { ?>
             <div class="form-group">
               <label class="col-md-4 control-label" for="profesor_coordonator">Profesor Coordonator</label>
               <div class="col-md-4">
@@ -52,6 +52,8 @@
                 </select>
               </div>
             </div>
+
+            <?php } ?>
 
             <div class="form-group">
             <label class="col-md-4 control-label" for="an_studiu">Alege anul de studiu</label>
@@ -78,18 +80,25 @@
             </fieldset>
             </form>
             <?php 
-              
+              print_r($_SESSION);
               if(is_array($_POST) && isset($_POST['adauga_materie'])){
                     $nume_materie = mysqli_real_escape_string($conn, $_POST['nume_materie']);
                     $specializare = mysqli_real_escape_string($conn, $_POST['specializare']);
                     $an_studiu = mysqli_real_escape_string($conn, $_POST['an_studiu']);
-                    $profesor_coordonator = mysqli_real_escape_string($conn, $_POST['profesor_coordonator']);
+                    if($_SESSION['user_logged'] == 'admin'){
+                      $profesor_coordonator = mysqli_real_escape_string($conn, $_POST['profesor_coordonator']);
+                    } else {
+                      $profesor_coordonator = $_SESSION['id_utilizator'];
+                    }
                   
                     
                     $query ="INSERT INTO materii (nume_materie, specializare, profesor_coordonator, an_studiu) VALUES ( '". $nume_materie."','".$specializare."','".$profesor_coordonator."','".$an_studiu."')";
                     
                    $result = mysqli_query($conn, $query);
-                   echo 'Materia a fost adaugata cu succes';
+                   if($result){
+                    echo 'Materia a fost adaugata cu succes';
+                   }
+                   mysql_free_result($result);
 
               }
           ?>

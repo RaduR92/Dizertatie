@@ -89,13 +89,11 @@
 
           } else {
             $query = "SELECT * FROM profesori WHERE mail='".$mail."' AND parola='".$parola."'";
+            echo $query;
             $result = mysqli_query($conn, $query);
-          
+            
             // verifica daca interogarea MySQL a gasit date valide
-            if ($result || mysql_num_rows($result) < 1) {
-                // daca nu, afiseaza un mesaj de eroare
-                echo "Datele introduse sunt incorecte<br>";
-            } else {
+            if ($result = mysqli_query($conn,$query)) {
             
                 // salveaza username-ul si parola in sesiune
                 $_SESSION['mail'] = $mail;
@@ -110,6 +108,11 @@
           
                 // afiseaza un mesaj de succes        
                 echo "Autentificarea a fost efectuata cu succes.";
+
+                  } else {
+                    
+                   // daca nu, afiseaza un mesaj de eroare
+                   echo "Datele introduse sunt incorecte<br>";
            }
           }
         }

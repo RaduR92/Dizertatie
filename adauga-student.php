@@ -103,6 +103,10 @@
                   
                    $result = mysqli_query($conn, $query);
 
+                   if ($result = mysqli_query($conn,$query)) { 
+                    echo 'Studentul a fost adaugat cu succes';
+                   }
+
               }
           ?>
         </div>

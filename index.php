@@ -8,8 +8,17 @@
         </li>
         <li class="breadcrumb-item active">Pagina de pornire</li>
       </ol>
-     
-     
+      <div class="container-fluid">
+        <?php if($_SESSION['user_logged'] == 'student') { ?>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header">
+              <h2>Materii Studiate</h2>      
+            </div>
+          </div>
+        </div>  
+        <?php } ?>  
+      </div>
     </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
