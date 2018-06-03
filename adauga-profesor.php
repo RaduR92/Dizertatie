@@ -1,20 +1,16 @@
-  <?php include('header.php'); ?>
+  <?php include('header.php'); 
+    if($_SESSION['user_logged'] == 'student' || $_SESSION['user_logged'] == 'profesor' ) {
+      header("Location:index.php");
+    }
+  
+  ?>
+  
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Acasa</a>
-        </li>
-        <li class="breadcrumb-item active">Adauga Profesor</li>
-      </ol>
-    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <form class="form-horizontal" action="adauga-profesor.php" method="POST">
             <fieldset>
-
             <legend>Adauga Profesor</legend>
 
             <div class="form-group">
@@ -36,7 +32,7 @@
             <div class="form-group">
               <label class="col-md-4 control-label" for="parola">Parola</label>  
               <div class="col-md-4">
-              <input id="parola" name="parola" type="text" placeholder="" class="form-control input-md" required="">
+              <input id="parola" name="parola" type="password" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
@@ -64,15 +60,26 @@
                     $prenume_profesor = mysqli_real_escape_string($conn, $_POST['prenume_profesor']);
                     $parola = base64_encode($_POST['parola']);
                     $mail = mysqli_real_escape_string($conn, $_POST['mail']);
-                  
+
+                    
+                    $check_mail = "SELECT * FROM profesori WHERE mail = '".$mail."'";
+                    $check_mail_result = mysqli_query($conn, $check_mail);
+
+                    if(mysqli_num_rows($check_mail_result)) {?>
+                    <script>
+                        $(document).ready(function(){
+                          alert('Adresa de e-mail exista in baza de date');
+                        });
+                    </script>
+                    <?php
+                      exit();
+                    } else {
                     
                     $query ="INSERT INTO profesori (nume_profesor, prenume_profesor, parola, mail) VALUES ( '". $nume_profesor."','".$prenume_profesor."','".$parola."','".$mail."')";
                     
                    $result = mysqli_query($conn, $query);
-
-                   if ($result = mysqli_query($conn,$query)) { 
                     echo 'Profesorul a fost adaugat cu succes';
-                   }
+                  }
 
               }
           ?>

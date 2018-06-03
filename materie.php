@@ -1,100 +1,143 @@
   <?php include('header.php'); ?>
   <div class="content-wrapper">
+    
+    <?php 
+      if($_SESSION['user_logged'] == 'profesor'){
+    ?>
+    <div class="container-fluid sectiune-adaugare">
+      <div class="row">
+        <div class="col-md-12 content">
+        <a href="adauga_curs.php?id_materie=<?php echo $_GET['id_materie']?>">
+          <button type="button" class="btn btn-primary">
+            <i class="fa fa-fw fa-plus"></i> Adauga Curs
+          </button> 
+        </a>
+        <a href="adauga_laborator.php?id_materie=<?php echo $_GET['id_materie']?>">
+          <button type="button" class="btn btn-primary">
+            <i class="fa fa-fw fa-plus"></i> Adauga Laborator
+          </button>
+        </a>
+        <a href="adauga_tema_proiect.php?id_materie=<?php echo $_GET['id_materie']?>">
+          <button type="button" class="btn btn-primary">
+            <i class="fa fa-fw fa-plus"></i> Adauga Tema/Proiect
+          </button>
+        </a>              
+        </div>
+      </div>
+    </div>
+    <?php
+      }
+    ?>
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Acasa</a>
-        </li>
-        <li class="breadcrumb-item active">Materii</li>
-      </ol>
-     
-      <div class="container-fluid">
-      <?php 
-        if($_SESSION['user_logged'] == 'profesor'){
-      ?>
+      <div class="row">
+        <div class="col-md-12 content">
+            <?php  
+              $nume_materie = "SELECT * from materii where ID = ".$_GET['id_materie']; 
+              $nume_materie_result = mysqli_query($conn, $nume_materie);
+              while ($row = mysqli_fetch_array($nume_materie_result))
+              {
+                    echo '<h2>'.$row['nume_materie'].'</h2>';
+              }   
+            
+            ?>
+
+            <!-- Nav pills -->
+            <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#cursuri">Cursuri</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#laboratoare">Laboratoare</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#teme_proiecte">Teme/Proiecte</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div id="cursuri" class="container tab-pane active"><br>
+                <?php 
+                  $id_materie = $_GET['id_materie'];
+                  if($_SESSION['user_logged'] == 'profesor'){
+                  $id_profesor = $_SESSION['id_utilizator'];
+      
+                  $query = "SELECT * from cursuri where id_materie = ".$id_materie." AND id_profesor = ".$id_profesor;
+                  } elseif($_SESSION['user_logged'] == 'student') {
+
+                    $query = "SELECT * from cursuri where id_materie = ".$id_materie;
+                  }
+                  $loop = mysqli_query($conn, $query);
+                  while ($row = mysqli_fetch_array($loop))
+                  {
+                        echo '<div class="continut-materie"><a href="'.$row['nume_fisier'].'" target="_blank">'.$row['scurta_descriere'].'</a></div>';
+                  }       
+                ?>
+               
+              </div>
+              <div id="laboratoare" class="container tab-pane fade"><br>
+                <?php 
+                  $id_materie = $_GET['id_materie'];
+                  if($_SESSION['user_logged'] == 'profesor'){
+                    $id_profesor = $_SESSION['id_utilizator'];
         
-        <div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Incarca laborator
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-      <form class="form-horizontal">
-          <fieldset>
-
-          <!-- Form Name -->
-          <legend>Incarca Laborator</legend>
-
-          <!-- File Button --> 
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="incarcare_laborator">Incarca fisier</label>
-            <div class="col-md-4">
-              <input id="incarcare_laborator" name="incarcare_laborator" class="input-file" type="file">
+                    $query = "SELECT * from laboratoare where id_materie = ".$id_materie." AND id_profesor = ".$id_profesor;
+                    } elseif($_SESSION['user_logged'] == 'student') {
+  
+                      $query = "SELECT * from laboratoare where id_materie = ".$id_materie;
+                    }
+                  $loop = mysqli_query($conn, $query);
+                  while ($row = mysqli_fetch_array($loop))
+                  {
+                        echo '<div class="continut-materie"><a href="'.$row['fisier'].'" target="_blank">'.$row['scurta_descriere'].'</a></div>';
+                  }       
+                ?>
+              </div>
+              <div id="teme_proiecte" class="container tab-pane fade"><br>
+                <?php 
+                  $id_materie = $_GET['id_materie'];
+                  if($_SESSION['user_logged'] == 'profesor'){
+                    $id_profesor = $_SESSION['id_utilizator'];
+        
+                    $query = "SELECT * from teme_proiecte where id_materie = ".$id_materie." AND id_profesor = ".$id_profesor;
+                    } elseif($_SESSION['user_logged'] == 'student') {
+  
+                      $query = "SELECT * from teme_proiecte where id_materie = ".$id_materie;
+                    }
+                  $loop = mysqli_query($conn, $query);
+                  while ($row = mysqli_fetch_array($loop))
+                  {
+                        echo '<div class="continut-materie">
+                                <p class="nume-tema"><b>Nume tema:</b> '.$row['nume_tema_proiect'].'</p>
+                                <p class="descriere-tema"><b>Scurta descriere:</b> '.$row['scurta_descriere_tema_proiect'].'</p>
+                                <p class="termen-limita"><b>Termen limita:</b>'.$row['termen_limita'].'</p>';
+                                if($_SESSION['user_logged'] == 'student') {
+                                  $check_tema_incarcata = "SELECT * FROM teme_proiecte_incarcate WHERE id_tema_proiect = ".$row['ID_tema_proiect']." AND id_student=".$_SESSION['id_utilizator'];
+                                  $check_tema_incarcata_result = mysqli_query($conn, $check_tema_incarcata);
+                                  if(mysqli_num_rows($check_tema_incarcata_result)) {
+                                      echo 'Tema/Proiectul a fost incarcat.';
+                                  } else {
+                                        $curent_date = date('Y-m-d', time());
+                                        if($curent_date < $row['termen_limita']) {
+                                          echo 'Tema/Proiectul poate fi incarcat(a) pana la data limita la ora 23:59.Ulterior, incarcarea temei/proiectului nu mai poate fi realizata.</br>';
+                                      echo '<a href="incarca_tema_proiect.php?id_materie='.$_GET['id_materie'].'&id_tema_proiect='.$row['ID_tema_proiect'].'">
+                                        <button type="button" class="btn btn-primary">
+                                          <i class="fa fa-fw fa-upload"></i> Incarca Tema/Proiect
+                                        </button>
+                                      </a>';  
+                                        } else {
+                                          echo 'Termenul limita a expirat. Nu se mai poate realiza incarcarea temei/proiectului';
+                                        }
+                                      }
+                                    }
+                        echo '</div>'; 
+                  }
+                       
+                ?>
+              </div>
             </div>
-          </div>
-
-          <!-- Textarea -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="textarea">Descriere</label>
-            <div class="col-md-4">                     
-              <textarea class="form-control" id="textarea" name="textarea" placeholder="Scurta descriere a fisierului incarcat"></textarea>
-            </div>
-          </div>
-
-          <!-- Button -->
-          <div class="form-group">
-            <label class="col-md-4 control-label" for="incarca_lab"></label>
-            <div class="col-md-4">
-              <button id="incarca_lab" name="incarca_lab" class="btn btn-primary">Adauga laborator</button>
-            </div>
-          </div>
-
-          </fieldset>
-          </form>
       </div>
     </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h5>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h5>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-</div>
-
-      <?php
-        }
-      ?>
-      </div>
      
     </div>
     <!-- /.container-fluid-->

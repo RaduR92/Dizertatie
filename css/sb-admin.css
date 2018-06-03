@@ -535,3 +535,67 @@ p.user {
 }
 
 /* Pagina Materiei */
+.container-fluid .nav-pills .nav-link.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.content .tab-content .container {
+  max-width: 100%;
+  padding: 0;
+}
+
+.sectiune-adaugare {
+  margin-bottom:30px;
+  margin-top:30px;
+}
+
+.sectiune-adaugare a:hover {
+  text-decoration: none;
+}
+
+
+@media (max-width: 768px) {
+  .sectiune-adaugare {
+    margin-bottom:20px;
+    margin-top:10px;
+  }
+
+  .sectiune-adaugare .btn {
+    display: inline-block;
+    width:100%;
+    margin-bottom:15px;
+  }
+}
+
+a.go-back {
+  width:100%;
+  display: block;
+}
+
+.continut-materie {
+  border-bottom:1px solid;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.continut-materie a:hover {
+  text-decoration: none;
+}
+
+a.materie-studiata {
+  padding: 30px;
+  display: -webkit-inline-box;
+  border: 2px solid #166cc3;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+a.materie-studiata:hover {
+  background-color:#166cc3;
+  color:#fff;
+  text-decoration: none;
+}
+
+
+

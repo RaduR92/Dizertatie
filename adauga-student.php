@@ -1,14 +1,10 @@
-  <?php include('header.php'); ?>
+  <?php include('header.php'); 
+      if($_SESSION['user_logged'] == 'student') {
+        header("Location:index.php");
+      }
+  
+  ?>
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Acasa</a>
-        </li>
-        <li class="breadcrumb-item active">Adauga Student</li>
-      </ol>
-    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -61,21 +57,31 @@
               <label class="col-md-4 control-label" for="an_studiu">Alege anul de studiu</label>
               <div class="col-md-4">
                 <select id="an_studiu" name="an_studiu" class="form-control">
+                  <option value="-">-Alege-</option>
                   <option value="an_1_licenta">Anul 1 Licenta</option>
                   <option value="an_2_licenta">Anul 2 Licenta</option>
                   <option value="an_3_licenta">Anul 3 Licenta</option>
                   <option value="an_4_licenta">Anul 4 Licenta</option>
                   <option value="an_1_master">Anul 1 Master</option>
-                  <option value="an_2_master">Anul 2 Master</option>
+                  <option value="an_2_master">Anul 2 Master</option>         
                 </select>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-md-4 control-label" for="specializare">Specializarea</label>  
-              <div class="col-md-4">
-              <input id="specializare" name="specializare" type="text" placeholder="" class="form-control input-md" required="">
-                
+              <div class="col-md-4">   
+                <select id="specializare" name="specializare" class="form-control">
+                  <option value="-">-Alege-</option>
+                  <option value="etc">ETC - Anul 1/2 Licenta</option>
+                  <option value="etc-ea">ETC - EA</option>
+                  <option value="etc-tst">ETC - TST</option>
+                  <option value="etc-master-irt">ETC Master IRT</option>
+                  <option value="etc-master-cn">ETC Master CN</option>
+                  <option value="etc-master-esi">ETC Master ESI</option>
+                  <option value="etc-master-ebi">ETC Master EBI</option>
+                  <option value="etc-master-tm">ETC Master TM</option>
+                </select>
               </div>
             </div>
 
@@ -89,7 +95,7 @@
           </form>
 
           <?php 
-              if(is_array($_POST) && $_POST['singlebutton']){
+              if(is_array($_POST) && isset($_POST['singlebutton'])){
                     $nume = mysqli_real_escape_string($conn, $_POST['nume']);
                     $prenume = mysqli_real_escape_string($conn, $_POST['prenume']);
                     $numar_matricol = mysqli_real_escape_string($conn, $_POST['numar_matricol']);
@@ -97,15 +103,35 @@
                     $parola = base64_encode($_POST['parola']);
                     $an_studiu = mysqli_real_escape_string($conn, $_POST['an_studiu']);
                     $specializare = mysqli_real_escape_string($conn, $_POST['specializare']);
-                    
-                    $query ="INSERT INTO studenti (nume, prenume, numar_matricol, mail, parola, an_studiu, specializare) VALUES ( '". $nume."','".$prenume."','".$numar_matricol."','".$mail."','".$parola."','".$an_studiu."'
-                    ,'".$specializare."' )";
-                  
-                   $result = mysqli_query($conn, $query);
 
-                   if ($result = mysqli_query($conn,$query)) { 
-                    echo 'Studentul a fost adaugat cu succes';
-                   }
+                    $check_mail = "SELECT * FROM studenti WHERE mail = '".$mail."'";
+                    $check_mail_result = mysqli_query($conn, $check_mail);
+
+                    $check_nr_matricol = "SELECT * FROM studenti WHERE numar_matricol = ".$numar_matricol;
+                    $check_nr_matricol_result = mysqli_query($conn, $check_nr_matricol);
+                    if(mysqli_num_rows($check_mail_result)) {?>
+                    <script>
+                        $(document).ready(function(){
+                          alert('Adresa de e-mail exista in baza de date');
+                        });
+                    </script>
+                    <?php
+                      exit();
+                      } elseif(mysqli_num_rows($check_nr_matricol_result)) {?>
+                        <script>
+                            $(document).ready(function(){
+                              alert('Numarul matricol exista in baza de date');
+                            });
+                        </script>
+                        <?php
+                          exit();
+                    } else {
+                      $query ="INSERT INTO studenti (nume, prenume, numar_matricol, mail, parola, an_studiu, specializare) VALUES ( '". $nume."','".$prenume."','".$numar_matricol."','".$mail."','".$parola."','".$an_studiu."'
+                      ,'".$specializare."' )";
+                    
+                      $result = mysqli_query($conn, $query);
+                      echo 'Studentul a fost adaugat cu succes';
+                  }
 
               }
           ?>

@@ -1,23 +1,28 @@
-  <?php include('header.php'); ?>
+  <?php include('header.php'); 
+       if($_SESSION['user_logged'] == 'student') {
+        header("Location:index.php");
+      }
+  
+  ?>
   <!--scripts to dynamically populate form -->
   <script>
     $( document ).ready(function() {
-      $('#an_studiu').on('change', function(){
-        var an_studiu = this.value; // get the selection value
+      $('#specializare').on('change', function(){
+        var specializare = this.value; 
         $.ajax({
-          type: "POST",  // method of sending data
-          url: "selectare_studenti.php", // name of PHP script
-          data:'an_studiu='+an_studiu, // parameter name and value
-          success: function(result){ // deal with the results
-            $("#studenti").html(result); // insert in div above
+          type: "POST",  
+          url: "selectare_studenti.php", 
+          data:'specializare='+specializare, 
+          success: function(result){ 
+            $("#studenti").html(result); 
             }
         });
         $.ajax({
-          type: "POST",  // method of sending data
-          url: "selectare_materii.php", // name of PHP script
-          data:'an_studiu='+an_studiu, // parameter name and value
-          success: function(result){ // deal with the results
-            $("#materii").html(result); // insert in div above
+          type: "POST",  
+          url: "selectare_materii.php", 
+          data:'specializare='+specializare, 
+          success: function(result){
+            $("#materii").html(result);
             }
         });
       });
@@ -25,15 +30,6 @@
   </script>
   <!-- end of scripts -->
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Acasa</a>
-        </li>
-        <li class="breadcrumb-item active">Inscriere Student Disciplina</li>
-      </ol>
-    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -43,16 +39,18 @@
           <legend>Inscriere Student Disciplina</legend>
 
           <div class="form-group">
-            <label class="col-md-4 control-label" for="an_studiu">Alege anul de studiu</label>
+            <label class="col-md-4 control-label" for="specializare">Alege specializarea</label>
             <div class="col-md-4">
-              <select id="an_studiu" name="an_studiu" class="form-control">
+              <select id="specializare" name="specializare" class="form-control">
                 <option value="-">-Alege-</option>
-                <option value="an_1_licenta">Anul 1 Licenta</option>
-                <option value="an_2_licenta">Anul 2 Licenta</option>
-                <option value="an_3_licenta">Anul 3 Licenta</option>
-                <option value="an_4_licenta">Anul 4 Licenta</option>
-                <option value="an_1_master">Anul 1 Master</option>
-                <option value="an_2_master">Anul 2 Master</option>
+                <option value="etc">ETC - Anul 1/2 Licenta</option>
+                <option value="etc-ea">ETC - EA</option>
+                <option value="etc-tst">ETC - TST</option>
+                <option value="etc-master-irt">ETC Master IRT</option>
+                <option value="etc-master-cn">ETC Master CN</option>
+                <option value="etc-master-esi">ETC Master ESI</option>
+                <option value="etc-master-ebi">ETC Master EBI</option>
+                <option value="etc-master-tm">ETC Master TM</option>
               </select>
             </div>
           </div>

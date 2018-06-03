@@ -1,15 +1,11 @@
-  <?php include('header.php'); ?>
+  <?php include('header.php'); 
+    if($_SESSION['user_logged'] == 'student') {
+      header("Location:index.php");
+    }
+  
+  ?>
   
   <div class="content-wrapper">
-    <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="index.php">Acasa</a>
-        </li>
-        <li class="breadcrumb-item active">Adauga Materie</li>
-      </ol>
-    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -22,14 +18,6 @@
               <label class="col-md-4 control-label" for="nume_materie">Nume materie</label>  
               <div class="col-md-4">
               <input id="nume_materie" name="nume_materie" type="text" placeholder="" class="form-control input-md" required="">
-                
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="specializare">Specializare</label>  
-              <div class="col-md-4">
-              <input id="specializare" name="specializare" type="text" placeholder="" class="form-control input-md" required="">
                 
               </div>
             </div>
@@ -56,16 +44,33 @@
             <?php } ?>
 
             <div class="form-group">
-            <label class="col-md-4 control-label" for="an_studiu">Alege anul de studiu</label>
+              <label class="col-md-4 control-label" for="an_studiu">Alege anul de studiu</label>
+              <div class="col-md-4">
+                <select id="an_studiu" name="an_studiu" class="form-control">
+                  <option value="-">-Alege-</option>
+                  <option value="an_1_licenta">Anul 1 Licenta</option>
+                  <option value="an_2_licenta">Anul 2 Licenta</option>
+                  <option value="an_3_licenta">Anul 3 Licenta</option>
+                  <option value="an_4_licenta">Anul 4 Licenta</option>
+                  <option value="an_1_master">Anul 1 Master</option>
+                  <option value="an_2_master">Anul 2 Master</option>         
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+            <label class="col-md-4 control-label" for="specializare">Alege specializarea</label>
             <div class="col-md-4">
-              <select id="an_studiu" name="an_studiu" class="form-control">
-                <option value="-">-Alege-</option>
-                <option value="an_1_licenta">Anul 1 Licenta</option>
-                <option value="an_2_licenta">Anul 2 Licenta</option>
-                <option value="an_3_licenta">Anul 3 Licenta</option>
-                <option value="an_4_licenta">Anul 4 Licenta</option>
-                <option value="an_1_master">Anul 1 Master</option>
-                <option value="an_2_master">Anul 2 Master</option>
+              <select id="specializare" name="specializare" class="form-control">
+              <option value="-">-Alege-</option>
+                <option value="etc">ETC - Anul 1/2 Licenta</option>
+                <option value="etc-ea">ETC - EA</option>
+                <option value="etc-tst">ETC - TST</option>
+                <option value="etc-master-irt">ETC Master IRT</option>
+                <option value="etc-master-cn">ETC Master CN</option>
+                <option value="etc-master-esi">ETC Master ESI</option>
+                <option value="etc-master-ebi">ETC Master EBI</option>
+                <option value="etc-master-tm">ETC Master TM</option>
               </select>
             </div>
           </div>
@@ -80,7 +85,6 @@
             </fieldset>
             </form>
             <?php 
-              print_r($_SESSION);
               if(is_array($_POST) && isset($_POST['adauga_materie'])){
                     $nume_materie = mysqli_real_escape_string($conn, $_POST['nume_materie']);
                     $specializare = mysqli_real_escape_string($conn, $_POST['specializare']);

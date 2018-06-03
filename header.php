@@ -30,6 +30,21 @@
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
+    <script>
+      $(document).ready(function(){
+        $("#sidenavToggler").click(function(e) {
+          e.preventDefault();
+          $("body").toggleClass("sidenav-toggled");
+          $(".navbar-sidenav .nav-link-collapse").addClass("collapsed");
+          $(".navbar-sidenav .sidenav-second-level, .navbar-sidenav .sidenav-third-level").removeClass("show");
+        });
+        // Force the toggled class to be removed when a collapsible nav link is clicked
+        $(".navbar-sidenav .nav-link-collapse").click(function(e) {
+          e.preventDefault();
+          $("body").removeClass("sidenav-toggled");
+        });
+      });
+    </script>
 </head>
 
 <body class="fixed-nav sticky-footer" id="page-top">
@@ -38,12 +53,13 @@
     if(!$_SESSION['user_logged']) {
       header("Location:login.php"); 
     }
+   error_reporting(0);
 
   ?>
 <?php include('database_connection.php'); ?>
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.php">UPT | Campus Virtual</a>
+    <a class="navbar-brand" href="index.php">UPT | Catalog Online</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fa fa-fw fa-bars"></i>
     </button>
@@ -55,6 +71,37 @@
             <span class="nav-link-text">Prima Pagina</span>
           </a>
         </li>
+        <?php
+          if($_SESSION['user_logged'] == 'admin') {
+        ?>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adauga Student">
+          <a class="nav-link" href="adauga-student.php">
+            <i class="fa fa-fw fa-plus"></i>
+            <span class="nav-link-text">Adauga Student</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adauga Profesor">
+          <a class="nav-link" href="adauga-profesor.php">
+            <i class="fa fa-fw fa-plus"></i>
+            <span class="nav-link-text">Adauga Profesor</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adauga Materie">
+          <a class="nav-link" href="adauga-materie.php">
+            <i class="fa fa-fw fa-plus"></i>
+            <span class="nav-link-text">Adauga Materie</span>
+          </a>
+        </li>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inscrie Student">
+          <a class="nav-link" href="inscriere-student-disciplina.php">
+            <i class="fa fa-fw fa-address-book"></i>
+            <span class="nav-link-text">Inscrie Student</span>
+          </a>
+        </li>
+
+        <?php    
+          } else {
+        ?>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Materii">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMaterii" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-book"></i>
@@ -62,6 +109,7 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMaterii">
             <?php 
+
             if($_SESSION['user_logged'] == 'student') {
               $query = 'SELECT materii.ID, materii.nume_materie FROM inscriere_studenti RIGHT JOIN materii ON inscriere_studenti.id_materie = materii.ID WHERE inscriere_studenti.id_student ='.$_SESSION['id_utilizator'];
               $loop = mysqli_query($conn, $query);
@@ -70,7 +118,7 @@
                     echo '<li>
                             <a href="materie.php?id_materie='.$row['ID'].'">'.$row['nume_materie'].'</a>
                           </li>';
-              }   
+              }  
             }
             
             if($_SESSION['user_logged'] == 'profesor') {
@@ -81,19 +129,14 @@
                     echo '<li>
                             <a href="materie.php?id_materie='.$row['ID'].'">'.$row['nume_materie'].'</a>
                           </li>';
-              }   
+              }
             }
             
             
             ?>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Noutati">
-          <a class="nav-link" href="noutati.php">
-            <i class="fa fa-fw fa-info-circle"></i>
-            <span class="nav-link-text">Noutati</span>
-          </a>
-        </li>
+        <?php } ?>
         <?php 
           if($_SESSION['user_logged'] == 'profesor') {
         ?>
@@ -101,6 +144,12 @@
             <a class="nav-link" href="adauga-materie.php">
               <i class="fa fa-fw fa-plus-square"></i>
               <span class="nav-link-text">Adauga Materie</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Inscrie Student">
+            <a class="nav-link" href="inscriere-student-disciplina.php">
+              <i class="fa fa-fw fa-address-book"></i>
+              <span class="nav-link-text">Inscrie Student</span>
             </a>
           </li>
         <?php

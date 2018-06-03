@@ -58,27 +58,27 @@
         
           // formeaza si executa query-ul de select din baza de date
           $query = "SELECT * FROM studenti WHERE mail='".$mail."' AND parola='".$parola."'";
-          
+
           $result = mysqli_query($conn, $query) or die ( "Error : ". mysqli_error($conn) );
-          
-          
-        
+
           // verifica daca interogarea MySQL a gasit date valide
-          if ($result = mysqli_query($conn,$query)) {
+          if (mysqli_num_rows($result) == 1) {
             $_SESSION['mail'] = $mail;
             $_SESSION['parola'] = $parola;
       
             // afiseaza un mesaj de succes        
             echo "Autentificarea a fost efectuata cu succes.";
             $_SESSION['user_logged'] = 'student';
-            while ($row = mysqli_fetch_array($result))
-                {
+
+            while ($row = $result->fetch_assoc())
+                {    
                      $_SESSION['id_utilizator'] = $row['ID'];
                      $_SESSION['nume_utilizator'] = $row['nume'].' '.$row['prenume'];
                      $_SESSION['an_studiu'] = $row['an_studiu'];
                      $_SESSION['specializare'] = $row['specializare'];
                 }
-            header("Location:index.php");
+
+           header("Location:index.php");
             
           } else {
           
@@ -87,18 +87,18 @@
               
           }
 
-          } else {
+          } elseif($_POST['tip_utilizator'] && $_POST['tip_utilizator'] == 'profesor' ) {
             $query = "SELECT * FROM profesori WHERE mail='".$mail."' AND parola='".$parola."'";
             echo $query;
             $result = mysqli_query($conn, $query);
             
             // verifica daca interogarea MySQL a gasit date valide
-            if ($result = mysqli_query($conn,$query)) {
+            if (mysqli_num_rows($result) == 1) {
             
                 // salveaza username-ul si parola in sesiune
                 $_SESSION['mail'] = $mail;
                 $_SESSION['parola'] = $parola;
-                while ($row = mysqli_fetch_array($result))
+                while ($row = $result->fetch_assoc())
                 {
                      $_SESSION['id_utilizator'] = $row['ID'];
                      $_SESSION['nume_utilizator'] = $row['nume_profesor'].' '.$row['prenume_profesor'];
@@ -114,6 +114,19 @@
                    // daca nu, afiseaza un mesaj de eroare
                    echo "Datele introduse sunt incorecte<br>";
            }
+          } else {
+            print_r($_POST);
+            if(isset($_POST['email_adresa']) && ($_POST['email_adresa'] == 'admin@uptclassroom.ro')) {
+              echo 'altceva';
+              if(base64_encode($_POST['parola_conectare']) == base64_encode('admin_2018') ){
+                echo 'ceva';
+                $_SESSION['mail'] = $mail;
+                $_SESSION['parola'] = $parola;
+                $_SESSION['nume_utilizator'] = 'Administrator';
+                $_SESSION['user_logged'] = 'admin';
+                header("Location:index.php");
+              }
+            }
           }
         }
         ?>
